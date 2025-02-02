@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kaprekar's Constant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/lux/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="mt-5 mb-3">
+      <a class="text-warning display-6" href="https://en.wikipedia.org/wiki/6174" target="_blank">Kaprekar's constant</a>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group mb-3">
+          <input class="form-control border" type="number" min="0" max="9" value="9" id="d1">
+          <input class="form-control border" type="number" min="0" max="9" value="7" id="d2">
+          <input class="form-control border" type="number" min="0" max="9" value="0" id="d3">
+          <input class="form-control border" type="number" min="0" max="9" value="1" id="d4">
+          <button class="btn btn-outline-warning">RUN</button>
+        </div>
+        <div id="error"></div>
+      </div>
+      <div class="col-md-6">
+        <pre class="fs-3"></pre>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+    $("body").attr("data-bs-theme", "dark").addClass("bg-black");
+
+    const $digits = $(`[type="number"]`);
+    const $btn = $("button");
+    const $pre = $("pre");
+    const $error = $("#error");
+    const nums = {
+      d1: $("#d1").val(),
+      d2: $("#d2").val(),
+      d3: $("#d3").val(),
+      d4: $("#d4").val()
+    };
+    let count = 1;
+
+    const combined = (nums) => Object.values(nums);
+    const asc = (l) => [...l].sort((a, b) => a - b);
+    const desc = (l) => [...l].sort((a, b) => b - a);
+    const calc = (a, b) => a - b;
+
+    $digits.on("change keyup", function () {
+      const id = $(this).attr("id");
+      const val = $(this).val();
+      nums[id] = parseInt(val) || 0;
+    });
+
+    function validateInput(nums) {
+      const uniqueDigits = new Set(Object.values(nums));
+      return uniqueDigits.size > 1;
+    }
+
+    function kaprekarIteration(c, steps = []) {
+      const a = asc(c).join("");
+      const d = desc(c).join("");
+      const result = calc(parseInt(d), parseInt(a));
+
+      steps.push(`${d} - ${a.padStart(4, "0")} = ${result}`);
+
+      if (result === 6174) {
+        displaySteps(steps);
+        return;
+      }
+
+      kaprekarIteration(
+        result.toString().split("").map(Number),
+        steps
+      );
+    }
+
+    function displaySteps(steps) {
+      $pre.empty();
+      count = 1;
+      steps.forEach((step, index) => {
+        setTimeout(() => {
+          $pre.append(`Iteration #${count++}: ${step}\n`);
+        }, 500 * index);
+      });
+    }
+
+    $btn.on("click", function () {
+      const c = combined(nums).map(Number);
+
+      if (!validateInput(nums)) {
+        $error.text("At least two digits must be different.");
+        $pre.empty();
+        return;
+      }
+
+      $error.empty();
+      kaprekarIteration(c);
+    });
+  </script>
+</body>
+</html>
