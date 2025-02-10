@@ -22,7 +22,7 @@
     </div>
 
 <div class="row">
-      <div class="col-12">
+      <div class="col-12 mb-5">
         <p>
           This number is renowned for the following rule:
         </p>
@@ -99,7 +99,7 @@ kaprekarIteration(9701);
         </div>
         <div id="error"></div>
       </div><div class="col-md-6">
-        <pre class="fs-3"></pre>
+        <pre id="iterations" class="fs-3"></pre>
       </div></div>
 
   </div>
@@ -109,7 +109,7 @@ kaprekarIteration(9701);
 
     const $digits = $(`[type="number"]`);
     const $btn = $("button");
-    const $pre = $("pre");
+    const $pre = $("#iterations");
     const $error = $("#error");
     const nums = {
       d1: $("#d1").val(),
@@ -175,6 +175,10 @@ kaprekarIteration(9701);
       $error.empty();
       kaprekarIteration(c);
     });
+
+    const observer = new MutationObserver(() => window.scrollTo(0, document.body.scrollHeight));
+
+    observer.observe(document.body, { childList: true, subtree: true });
   </script>
 </body>
 </html>
