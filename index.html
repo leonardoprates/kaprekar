@@ -42,15 +42,22 @@
 6642 - 2466 = 4176
 7641 - 1467 = 6174</pre>
 
-        <p>Using recursion:</p>
-<pre class="code">const asc = (n) =&gt; `${n}`.split("")
+        <p>Code representation:</p>
+<pre class="code">
+// Convert the number to string, sort ascending
+const asc = (n) =&gt; `${n}`.split("")
                          .sort((a, b) =&gt; a - b)
                          .join("");
+// Convert the number to string, sort descending
 const desc = (n) =&gt; `${n}`.split("")
                           .sort((a, b) =&gt; b - a)
                           .join("");
+// subtract the number sorted and its reverse sort
 const calc = (a, b) =&gt; a - b;
+</pre>
 
+        <p>Using recursion:</p>
+<pre class="code">
 function kaprekarIteration(num) {
   const a = asc(num);
   const d = desc(num);
@@ -68,14 +75,7 @@ function kaprekarIteration(num) {
 kaprekarIteration(9701);
 </pre>
         <p>Using a loop:</p>
-<pre class="code">const asc = (n) =&gt; `${n}`.split("")
-                         .sort((a, b) =&gt; a - b)
-                         .join("");
-const desc = (n) =&gt; `${n}`.split("")
-                          .sort((a, b) =&gt; b - a)
-                          .join("");
-const calc = (a, b) =&gt; a - b;
-
+<pre class="code">
 function kaprekarIteration(num) {
   while (num !== 6174) {
     const a = asc(num);
