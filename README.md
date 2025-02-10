@@ -4,7 +4,7 @@ This number is renowned for the following rule:
 
 Take any four-digit number, using at least two different digits (leading zeros are allowed). Arrange the digits in descending and then in ascending order to get two four-digit numbers, adding leading zeros if necessary. Subtract the smaller number from the bigger number. Go back to step 2 and repeat.
 
-This process is known as Kaprekar's routine. It will always reach its fixed point, 6174, in at most 7 iterations.[4] Once 6174 is reached, the process will continue yielding 7641 – 1467 = 6174.
+This process is known as Kaprekar's routine. It will always reach its fixed point, 6174, in at most 7 iterations. Once 6174 is reached, the process will continue yielding 7641 – 1467 = 6174.
 
 For example, choose 9701:
 ```
