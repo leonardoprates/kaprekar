@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kaprekar's Constant</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/lux/bootstrap.min.css">
+  <style>
+    .code {
+      background: #111;
+      border: 1px solid #333;
+      overflow-x: auto;
+      padding: 10px;
+      font-size: 1.25em;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -12,6 +21,76 @@
       <a class="text-warning display-6" href="https://en.wikipedia.org/wiki/6174" target="_blank">Kaprekar's constant</a>
     </div>
     <div class="row">
+      <div class="col-12">
+        <p>
+          This number is renowned for the following rule:
+        </p>
+        <p>
+          Take any four-digit number, using at least two different digits (leading zeros are allowed).
+          Arrange the digits in descending and then in ascending order to get two four-digit numbers, adding leading zeros if necessary.
+          Subtract the smaller number from the bigger number.
+          Go back to step 2 and repeat.
+        </p>
+        <p>This process is known as Kaprekar's routine. It will always reach its fixed point, 6174, in at most 7 iterations.[4] Once 6174 is reached, the process will continue yielding 7641 – 1467 = 6174.</p>
+        <p>For example, choose 9701:</p>
+<pre class="code">9710 - 0179 = 9531
+9531 - 1359 = 8172
+8721 - 1278 = 7443
+7443 - 3447 = 3996
+9963 - 3699 = 6264
+6642 - 2466 = 4176
+7641 - 1467 = 6174</pre>
+
+        <p>Using recursion:</p>
+<pre class="code">const asc = (n) =&gt; `${n}`.split("")
+                         .sort((a, b) =&gt; a - b)
+                         .join("");
+const desc = (n) =&gt; `${n}`.split("")
+                          .sort((a, b) =&gt; b - a)
+                          .join("");
+const calc = (a, b) =&gt; a - b;
+
+function kaprekarIteration(num) {
+  const a = asc(num);
+  const d = desc(num);
+  const result = calc(parseInt(d), parseInt(a));
+
+  console.log(`${d} - ${a.padStart(4, "0")} = ${result}`);
+
+  if (result === 6174) {
+    return;
+  }
+
+  return kaprekarIteration(result);
+}
+
+kaprekarIteration(9701);
+</pre>
+        <p>Using a loop:</p>
+<pre class="code">const asc = (n) =&gt; `${n}`.split("")
+                         .sort((a, b) =&gt; a - b)
+                         .join("");
+const desc = (n) =&gt; `${n}`.split("")
+                          .sort((a, b) =&gt; b - a)
+                          .join("");
+const calc = (a, b) =&gt; a - b;
+
+function kaprekarIteration(num) {
+  while (num !== 6174) {
+    const a = asc(num);
+    const d = desc(num);
+    num = calc(parseInt(d), parseInt(a));
+
+    console.log(`${d} - ${a.padStart(4, "0")} = ${num}`);
+
+    if (num === 6174) break;
+  }
+}
+
+kaprekarIteration(9701);
+</pre>
+        </div>
+      </div>
       <div class="col-md-6">
         <div class="input-group mb-3">
           <input class="form-control border" type="number" min="0" max="9" value="9" id="d1">
