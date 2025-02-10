@@ -174,11 +174,11 @@ kaprekarIteration(9701);
 
       $error.empty();
       kaprekarIteration(c);
+
+      const observer = new MutationObserver(() => window.scrollTo(0, document.body.scrollHeight));
+
+      observer.observe(document.body, { childList: true, subtree: true });
     });
-
-    const observer = new MutationObserver(() => window.scrollTo(0, document.body.scrollHeight));
-
-    observer.observe(document.body, { childList: true, subtree: true });
   </script>
 </body>
 </html>
